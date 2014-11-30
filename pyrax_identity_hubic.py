@@ -140,6 +140,8 @@ class HubicIdentity(BaseIdentity):
 
         swift_token = r.json()
         self.authenticated = True
+        # set a dummy tenant_id to prevent pyrax fromreauthenticating on each request
+        self.tenant_id = 'none'
         self.token = swift_token['token']
         self.expires = swift_token['expires']
         self.services['object_store'] = Service(self, {
